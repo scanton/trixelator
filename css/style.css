@@ -1,0 +1,28 @@
+body {
+	background: black;
+	color: #999;
+}
+.trixelator {
+	background: #333;
+}
+.image-preview img {
+	border: 1px solid #444;
+	padding: 10px;
+	background: #555;
+	width: 100%;
+	min-height: 200px;
+}
+.mosaic-output svg {
+	border: 1px solid #444;
+	padding: 10px;
+	background: #555;
+	width: 100%;
+	min-height: 200px;
+}
+.row.inputs {
+	text-align: center;
+}
+.row.inputs input {
+	margin-right: 1em;
+	margin-left: .25em;
+}
