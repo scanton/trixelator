@@ -3,13 +3,48 @@ const {dialog} = require('electron').remote;
 
 require('./custom_modules/utils/enableContextMenu.js')();
 
+
+const toDegrees = function (rad) {
+	return rad * (180 / Math.PI);
+}
+const toRadians = function (deg) {
+	return deg * (Math.PI / 180);
+}
+const svgTag = function (tag, attrs) {
+	var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+	for (var k in attrs) {
+		el.setAttribute(k, attrs[k]);
+	}
+	return el;
+}
+const averagePixelData = function(arr) {
+	var l = arr.length;
+	var count = 0;
+	var r = 0;
+	var g = 0;
+	var b = 0;
+	var a = 0
+	for(var i = 0; i < l; i+= 4) {
+		r += arr[i];
+		g += arr[i + 1];
+		b += arr[i + 2];
+		a += arr[i + 3];
+		++count;
+	}
+	return [Math.floor(r/count), Math.floor(g/count), Math.floor(b/count), Math.floor(a/count)];
+}
+const getColorFromData = function(data) {
+	return 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
+}
+
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
 		imagePath: '',
-		baseWidth: 100,
-		sampleSize: 2
+		baseWidth: 10,
+		sampleSize: 10
 	},
 	mutations: {
 		setBaseWidth: function(state, value) {
