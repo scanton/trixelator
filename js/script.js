@@ -37,6 +37,10 @@ const getColorFromData = function(data) {
 	return 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
 }
 
+const eqRad = toRadians(60);
+const eqSin = Math.sin(eqRad);
+const eqCos = Math.cos(eqRad);
+
 
 Vue.use(Vuex);
 
