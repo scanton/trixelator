@@ -37,7 +37,6 @@ const getColorFromData = function(data) {
 	return 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
 }
 
-
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
