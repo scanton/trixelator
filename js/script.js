@@ -41,14 +41,13 @@ const eqRad = toRadians(60);
 const eqSin = Math.sin(eqRad);
 const eqCos = Math.cos(eqRad);
 
-
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
 		imagePath: '',
-		baseWidth: 10,
-		sampleSize: 10
+		baseWidth: 25,
+		sampleSize: 25
 	},
 	mutations: {
 		setBaseWidth: function(state, value) {

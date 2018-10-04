@@ -26,3 +26,17 @@ body {
 	margin-right: 1em;
 	margin-left: .25em;
 }
+.trixelation {
+	position: relative;
+}
+.trixel {
+	display: inline-block;
+	position: absolute;
+	border-top: 22px solid #999;
+	border-left: 13px solid transparent !important;
+	border-right: 13px solid transparent !important;
+}
+.trixel.point-up {
+	border-bottom: 22px solid #999;
+	border-top-width: 0;
+}
