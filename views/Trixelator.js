@@ -16,7 +16,7 @@
 				<div class="col-sm-12">
 					<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
 					<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
-					<button @click="handleGenerateMosaic" class="btn btn-default">Generate Mosaic</button>
+					<button @click="handleGenerateMosaic" class="btn btn-default">Trixelate</button>
 				</div>
 			</div>
 			<div class="row mosaic-output">
