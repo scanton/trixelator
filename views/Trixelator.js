@@ -9,14 +9,14 @@
 			</div>
 			<div class="row image-preview">
 				<div class="col-sm-12">
-					<img :src="imagePath" />
+					<img id="trixelator-target" :src="imagePath" />
 				</div>
 			</div>
 			<div class="row inputs">
 				<div class="col-sm-12">
 					<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
 					<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
-					<button @click="handleGenerateMosaic" class="btn btn-default">Generate Mosaic</button>
+					<button @click="handleGenerateMosaic" class="btn btn-default">Trixelate</button>
 				</div>
 			</div>
 			<div class="row mosaic-output">
@@ -59,7 +59,18 @@
 		},
 		methods: {
 			handleGenerateMosaic: function(e) {
-				console.log("gen");
+				
+				var img = document.getElementById("trixelator-target");
+				var canvas = document.createElement("canvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
+				canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+
+				var widthSteps = Math.floor(img.width / (this.baseWidth / 2));
+				//var heightSteps = Math.floor(img.height / (this.baseWidth * eqCos));
+
+				//var pixelData = canvas.getContext('2d').getImageData(150, 200, 10, 10).data;
+
 			},
 			handleSelectImage: function(e) {
 				dialog.showOpenDialog({
