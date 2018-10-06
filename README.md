@@ -1,6 +1,9 @@
 # trixelator
 A desktop application to create photo mosaics with triangular pixels
 
+![trixelation example](trixelator/images/adam.jpg "Trixelatemd Adam")
+
+
 ## Installation Instructions
 
 You will need to install the latest version of [Node.js](https://nodejs.org/en/) to install this project.  If you are new to Node.js, you can download the most recent Node installer from the home page of their website.
