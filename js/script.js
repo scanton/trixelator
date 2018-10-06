@@ -45,11 +45,15 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		imagePath: '',
 		baseWidth: 25,
+		colorList: [],
+		imagePath: '/Users/satoricanton/Desktop/31105585103_4c32392ac1_k.jpg',
 		sampleSize: 25
 	},
 	mutations: {
+		colorList: function(state, list) {
+			state.colorList = list;
+		},
 		setBaseWidth: function(state, value) {
 			state.baseWidth = value;
 		},

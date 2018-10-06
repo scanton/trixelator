@@ -26,6 +26,8 @@
 					</div>
 				</div>
 			</div>
+			<div class="inline-styles">
+			</div>
 		</div>
 	`;
 	
@@ -61,31 +63,48 @@
 		},
 		methods: {
 			handleGenerateMosaic: function(e) {
+				var base = Number(this.baseWidth);
+				var halfBase = base / 2;
+				var baseSin = base * eqSin;
 				var img = document.getElementById("trixelator-target");
 				var canvas = document.createElement("canvas");
 				canvas.width = img.width;
 				canvas.height = img.height;
 				canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
 
-				var widthSteps = Math.floor(img.width / (this.baseWidth / 2));
-				var heightSteps = Math.floor(img.height / (this.baseWidth * eqSin));
+				var widthSteps = Math.floor(img.width / halfBase);
+				var heightSteps = Math.floor(img.height / baseSin);
 				
+				var colorList = [];
 				var pixelData, color, x, y, pointUp;
 				var s = '<div class="trixelation">'
 				for(y = 0; y < heightSteps; y++) {
 					for(x = 0; x < widthSteps; x++) {
-						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * (this.baseWidth / 2), y * (this.baseWidth * eqSin), this.sampleSize, this.sampleSize).data);
+						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, this.sampleSize, this.sampleSize).data);
 						color = getColorFromData(pixelData);
-						if( (x + y) % 2 ) {
-							pointUp = 'point-up';
-						} else {
-							pointUp = '';
-						}
-						s += '<div class="trixel ' + pointUp + '" style="border-color: ' + color + '; left: ' + Math.floor(x * (this.baseWidth / 2)) + 'px; top: ' + Math.floor(y * this.baseWidth * eqSin) + 'px;"></div>';
+						pointUp = (x + y) % 2 ? 'point-up' : '';
+						s += '<div class="trixel ' + pointUp + '" style="border-color: ' + color + '; left: ' + Math.floor(x * halfBase) + 'px; top: ' + Math.floor(y * baseSin) + 'px;"></div>';
+						colorList.push({x: x, y: y, pixelData: pixelData, color: color, pointUp: pointUp, baseWidth: base});
 					}
 				}
 				s += '</div>';
 				$(".trixelation-output").html(s);
+				$(".inline-styles").html(`
+					<style>
+						.trixel {
+							display: inline-block;
+							position: absolute;
+							border-top: ` + (base + 1) + `px solid #999;
+							border-left: ` + (halfBase + 1) + `px solid transparent !important;
+							border-right: ` + (halfBase + 1) + `px solid transparent !important;
+						}
+						.trixel.point-up {
+							border-bottom: ` + (base + 1) + `px solid #999;
+							border-top-width: 0;
+						}
+					</style>
+				`);
+				this.$store.commit("colorList", colorList);
 			},
 			handleSelectImage: function(e) {
 				dialog.showOpenDialog({
@@ -95,6 +114,7 @@
 					filters: [{name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif']}]
 				}, (result) => {
 					if(result) {
+						console.log(result[0]);
 						store.commit("setImagePath", result[0]);
 					}
 				});
