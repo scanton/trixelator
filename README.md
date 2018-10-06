@@ -1,7 +1,7 @@
 # trixelator
 A desktop application to create photo mosaics with triangular pixels
 
-![trixelation example](trixelator/images/adam.jpg "Trixelatemd Adam")
+![trixelation example](https://raw.githubusercontent.com/scanton/trixelator/master/images/adam.jpg "Trixelatemd Adam")
 
 
 ## Installation Instructions
