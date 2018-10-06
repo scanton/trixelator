@@ -2,13 +2,12 @@
 	var componentName = 'trixelator';
 	var s = `
 		<div class="` + componentName + ` container-fluid">
-			<div class="row">
-				<div class="col-sm-12">
-					<button @click="handleSelectImage" class="btn btn-default">Select Image</button>
-				</div>
-			</div>
 			<div class="row image-preview">
 				<div class="col-sm-12">
+					<div @click="handleSelectImage" class="click-overlay">
+						<span class="glyphicon glyphicon-camera"></span>
+						<div class="watermark-label">Select Image</div>
+					</div>
 					<img id="trixelator-target" :src="imagePath" />
 				</div>
 			</div>
@@ -33,7 +32,7 @@
 	
 	Vue.component(componentName, {
 		created: function() {
-			console.log(this.baseWidth * eqSin);
+			
 		},
 		computed: {
 			baseWidth: {
@@ -74,7 +73,7 @@
 
 				var widthSteps = Math.floor(img.width / halfBase);
 				var heightSteps = Math.floor(img.height / baseSin);
-				
+				console.log('widthSteps: ' + widthSteps, 'heightSteps:' + heightSteps, 'totalSteps: ' + (widthSteps * heightSteps));
 				var colorList = [];
 				var pixelData, color, x, y, pointUp;
 				var s = '<div class="trixelation">'
@@ -114,7 +113,6 @@
 					filters: [{name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif']}]
 				}, (result) => {
 					if(result) {
-						console.log(result[0]);
 						store.commit("setImagePath", result[0]);
 					}
 				});

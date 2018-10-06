@@ -12,6 +12,20 @@ body {
 	width: 100%;
 	min-height: 200px;
 }
+.image-preview .click-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, .25);
+	cursor: pointer;
+	display: none;
+	text-align: center;
+}
+.image-preview:hover .click-overlay {
+	display: block;
+}
 .mosaic-output svg {
 	border: 1px solid #444;
 	padding: 10px;
