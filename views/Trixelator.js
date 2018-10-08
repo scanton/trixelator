@@ -4,7 +4,7 @@
 		<div class="` + componentName + ` container-fluid">
 			<div class="row image-preview">
 				<div class="col-sm-12">
-					<div @click="handleSelectImage" class="click-overlay">
+					<div @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="click-overlay">
 						<span class="glyphicon glyphicon-camera"></span>
 						<div class="watermark-label">Select Image</div>
 					</div>
@@ -73,7 +73,9 @@
 
 				var widthSteps = Math.floor(img.width / halfBase);
 				var heightSteps = Math.floor(img.height / baseSin);
+
 				console.log('widthSteps: ' + widthSteps, 'heightSteps:' + heightSteps, 'totalSteps: ' + (widthSteps * heightSteps));
+				
 				var colorList = [];
 				var pixelData, color, x, y, pointUp;
 				var s = '<div class="trixelation">'

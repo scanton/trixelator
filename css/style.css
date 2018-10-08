@@ -10,21 +10,29 @@ body {
 	padding: 10px;
 	background: #555;
 	width: 100%;
-	min-height: 200px;
+	min-height: 350px;
 }
 .image-preview .click-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
-	right: 0;
+	right: 50%;
 	bottom: 0;
-	background: rgba(0, 0, 0, .25);
+	background: rgba(0, 0, 0, .5);
 	cursor: pointer;
 	display: none;
 	text-align: center;
+	font-size: 32pt;
+	color: white;
+	padding: 90px;
 }
-.image-preview:hover .click-overlay {
+.image-preview:hover .click-overlay, .image-preview .click-overlay.show-anyway {
 	display: block;
+}
+.image-preview .click-overlay .glyphicon {
+	border: 10px solid white;
+	padding: .5em;
+	border-radius: 50%;
 }
 .mosaic-output svg {
 	border: 1px solid #444;

@@ -47,7 +47,7 @@ const store = new Vuex.Store({
 	state: {
 		baseWidth: 20,
 		colorList: [],
-		imagePath: '',
+		imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/St-Francis-River-ar.jpg/2560px-St-Francis-River-ar.jpg',
 		sampleSize: 20
 	},
 	mutations: {
