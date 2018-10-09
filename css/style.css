@@ -64,3 +64,8 @@ body {
 	border-top-width: 0;
 }
 */
+.pallette-swatch {
+	float: left;
+	width: 30px;
+	height: 30px;
+}

@@ -25,6 +25,7 @@
 					</div>
 				</div>
 			</div>
+			<pallette></pallette>
 			<div class="inline-styles">
 			</div>
 		</div>
@@ -77,15 +78,16 @@
 				console.log('widthSteps: ' + widthSteps, 'heightSteps:' + heightSteps, 'totalSteps: ' + (widthSteps * heightSteps));
 				
 				var colorList = [];
-				var pixelData, color, x, y, pointUp;
+				var pixelData, color, x, y, pointUp, hsl;
 				var s = '<div class="trixelation">'
 				for(y = 0; y < heightSteps; y++) {
 					for(x = 0; x < widthSteps; x++) {
 						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, this.sampleSize, this.sampleSize).data);
 						color = getColorFromData(pixelData);
+						hsl = rgbToHsl(pixelData[0], pixelData[1], pixelData[2]);
 						pointUp = (x + y) % 2 ? 'point-up' : '';
 						s += '<div class="trixel ' + pointUp + '" style="border-color: ' + color + '; left: ' + Math.floor(x * halfBase) + 'px; top: ' + Math.floor(y * baseSin) + 'px;"></div>';
-						colorList.push({x: x, y: y, pixelData: pixelData, color: color, pointUp: pointUp, baseWidth: base});
+						colorList.push({x: x, y: y, pixelData: pixelData, color: color, pointUp: pointUp, baseWidth: base, hue: hsl[0], saturation: hsl[1], luminance: hsl[2]});
 					}
 				}
 				s += '</div>';
