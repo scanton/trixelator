@@ -12,28 +12,6 @@ body {
 	width: 100%;
 	min-height: 350px;
 }
-.image-preview .click-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 50%;
-	bottom: 0;
-	background: rgba(0, 0, 0, .5);
-	cursor: pointer;
-	display: none;
-	text-align: center;
-	font-size: 32pt;
-	color: white;
-	padding: 90px;
-}
-.image-preview:hover .click-overlay, .image-preview .click-overlay.show-anyway {
-	display: block;
-}
-.image-preview .click-overlay .glyphicon {
-	border: 10px solid white;
-	padding: .5em;
-	border-radius: 50%;
-}
 .mosaic-output svg {
 	border: 1px solid #444;
 	padding: 10px;
@@ -47,6 +25,12 @@ body {
 .row.inputs input {
 	margin-right: 1em;
 	margin-left: .25em;
+	border-radius: 5px;
+	background: black;
+	color: white;
+	border: 1px solid #999;
+	padding: .25em .75em;
+	width: 75px;
 }
 .trixelation {
 	position: relative;
@@ -68,4 +52,14 @@ body {
 	float: left;
 	width: 30px;
 	height: 30px;
+}
+.select-image-button {
+	margin-right: 15px;
+}
+.toolbar-component {
+	margin-top: 10px;
+	display: inline-block;
+}
+.pallette {
+	display: none;
 }

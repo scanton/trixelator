@@ -2,20 +2,26 @@
 	var componentName = 'trixelator';
 	var s = `
 		<div class="` + componentName + ` container-fluid">
-			<div class="row image-preview">
-				<div class="col-sm-12">
-					<div @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="click-overlay">
-						<span class="glyphicon glyphicon-camera"></span>
-						<div class="watermark-label">Select Image</div>
-					</div>
-					<img id="trixelator-target" :src="imagePath" />
-				</div>
-			</div>
 			<div class="row inputs">
 				<div class="col-sm-12">
-					<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
-					<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
+
+					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button">
+						<span class="glyphicon glyphicon-camera"></span>
+						<span class="watermark-label">Select Image</span>
+					</button>
+
+					<div  class="toolbar-component">
+						<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
+					</div>
+					<div  class="toolbar-component">
+						<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
+					</div>
 					<button @click="handleGenerateMosaic" class="btn btn-default">Trixelate</button>
+				</div>
+			</div>
+			<div class="row image-preview">
+				<div class="col-sm-12">
+					<img id="trixelator-target" :src="imagePath" />
 				</div>
 			</div>
 			<div class="row mosaic-output">
