@@ -17,6 +17,7 @@
 						<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
 					</div>
 					<button @click="handleGenerateMosaic" class="btn btn-default">Trixelate</button>
+					<button @click="handleSaveAsSvg" class="btn btn-default">Save SVG</button>
 				</div>
 			</div>
 			<div class="row image-preview">
@@ -114,6 +115,55 @@
 					</style>
 				`);
 				this.$store.commit("colorList", colorList);
+			},
+			handleSaveAsSvg: function(e) {
+				var base = Number(this.baseWidth);
+				var halfBase = base / 2;
+				var baseSin = base * eqSin;
+				var img = document.getElementById("trixelator-target");
+				var canvas = document.createElement("canvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
+				canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+
+				var widthSteps = Math.floor(img.width / halfBase);
+				var heightSteps = Math.floor(img.height / baseSin);
+
+				console.log('widthSteps: ' + widthSteps, 'heightSteps:' + heightSteps, 'totalSteps: ' + (widthSteps * heightSteps));
+				
+				//var colorList = [];
+				var pixelData, color, x, y, pointUp, hsl, a;
+				var s = '<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 595.3 841.9" enable-background="new 0 0 595.3 841.9" xml:space="preserve">';
+				for(y = 0; y < heightSteps; y++) {
+					for(x = 0; x < widthSteps; x++) {
+						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, this.sampleSize, this.sampleSize).data);
+						color = getColorFromData(pixelData);
+						hsl = rgbToHsl(pixelData[0], pixelData[1], pixelData[2]);
+						pointUp = (x + y) % 2 ? 'point-up' : '';
+						a = [];
+						s += '<polygon fill="' + color + '" ';
+						if(pointUp) {
+						//	a.push(((x * halfBase) + halfBase) + "," + (y * baseSin));
+						//	a.push((x * halfBase) + "," + (y * baseSin) + baseSin);
+						//	a.push(((x * halfBase) + base) + "," + (y * baseSin) + baseSin);
+							
+							a.push((x * halfBase) + "," + ((y * baseSin) + baseSin));
+							a.push(((x * halfBase) + base) + "," + ((y * baseSin) + baseSin));
+							a.push(((x * halfBase) + halfBase) + "," + (y * baseSin));
+						} else {
+							a.push((x * halfBase) + "," + (y * baseSin));
+							a.push(((x * halfBase) + base) + "," + (y * baseSin));
+							a.push(((x * halfBase) + halfBase) + "," + ((y * baseSin) + baseSin));
+						}
+						s += 'points="' + (a.join(" ")) + '"';
+						s += ' />';
+						//left: ' + Math.floor(x * halfBase) + 'px; top: ' + Math.floor(y * baseSin) + 'px;"
+						//colorList.push({x: x, y: y, pixelData: pixelData, color: color, pointUp: pointUp, baseWidth: base, hue: hsl[0], saturation: hsl[1], luminance: hsl[2]});
+					}
+				}
+				s += '</svg>';
+				console.log(s);
+				//$(".trixelation-output").html(s);
 			},
 			handleSelectImage: function(e) {
 				dialog.showOpenDialog({
