@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/scanton/trixelator#readme",
   "dependencies": {
-    "electron-prebuilt": "^1.4.13"
+    "electron-prebuilt": "^1.4.13",
+    "fs-extra": "^5.0.0"
   }
 }
