@@ -63,6 +63,13 @@ const rgbToHsl = function(r, g, b) {
 const getColorFromData = function(data) {
 	return 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
 }
+const componentToHex = function (c) {
+	var hex = c.toString(16);
+	return hex.length == 1 ? "0" + hex : hex;
+}
+const getHexColorFromData = function(data) {
+	return '#' + componentToHex(data[0]) + componentToHex(data[1]) + componentToHex(data[2]);
+}
 
 const eqRad = toRadians(60);
 const eqSin = Math.sin(eqRad);

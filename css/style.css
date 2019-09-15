@@ -21,6 +21,13 @@ body {
 }
 .row.inputs {
 	text-align: center;
+	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    background: #333333;
+    right: 0;
+    height: 50px;
 }
 .row.inputs input {
 	margin-right: 1em;

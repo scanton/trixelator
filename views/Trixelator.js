@@ -4,12 +4,10 @@
 		<div class="` + componentName + ` container-fluid">
 			<div class="row inputs">
 				<div class="col-sm-12">
-
 					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button">
 						<span class="glyphicon glyphicon-camera"></span>
 						<span class="watermark-label">Select Image</span>
 					</button>
-
 					<div  class="toolbar-component">
 						<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
 					</div>
@@ -129,33 +127,36 @@
 				var widthSteps = Math.floor(img.width / halfBase);
 				var heightSteps = Math.floor(img.height / baseSin);
 
-				console.log('widthSteps: ' + widthSteps, 'heightSteps:' + heightSteps, 'totalSteps: ' + (widthSteps * heightSteps));
+				//console.log('widthSteps: ' + widthSteps, 'heightSteps:' + heightSteps, 'totalSteps: ' + (widthSteps * heightSteps));
 				
 				//var colorList = [];
+				var overlapSize = 0.75;
 				var pixelData, color, x, y, pointUp, hsl, a;
-				var s = '<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 ' + img.width + ' ' + img.height + '" enable-background="new 0 0 ' + img.width + ' ' + img.height + '" xml:space="preserve">';
+				var portWidth = img.width - base;
+				var portHeight = img.height - baseSin;
+				var s = '<?xml version="1.0" encoding="utf-8"?>\n<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" x="0px" y="0px" viewBox="0 0 ' + portWidth + ' ' + portHeight + '" enable-background="new 0 0 ' + portWidth + ' ' + portHeight + '" xml:space="preserve"><g inkscape:groupmode="layer" inkscape:label="Layer 1"><g>';
 				for(y = 0; y < heightSteps; y++) {
 					for(x = 0; x < widthSteps; x++) {
 						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, this.sampleSize, this.sampleSize).data);
-						color = getColorFromData(pixelData);
+						color = getHexColorFromData(pixelData);
 						hsl = rgbToHsl(pixelData[0], pixelData[1], pixelData[2]);
 						pointUp = (x + y) % 2 ? 'point-up' : '';
 						a = [];
-						s += '\n\r<polygon fill="' + color + '" ';
+						s += '\n<polygon fill="' + color + '" ';
 						if(pointUp) {
-							a.push(Math.round(x * halfBase) + "," + Math.round((y * baseSin) + baseSin));
-							a.push(Math.round((x * halfBase) + base) + "," + Math.round((y * baseSin) + baseSin));
-							a.push(Math.round((x * halfBase) + halfBase) + "," + Math.round(y * baseSin));
+							a.push(Math.round((x * halfBase) - overlapSize - halfBase) + "," + Math.round(((y * baseSin) + baseSin) + overlapSize));
+							a.push(Math.round((x * halfBase) + base + overlapSize - halfBase) + "," + Math.round(((y * baseSin) + baseSin) + overlapSize));
+							a.push(Math.round((x * halfBase)) + "," + Math.round((y * baseSin) - overlapSize));
 						} else {
-							a.push(Math.round(x * halfBase) + "," + Math.round(y * baseSin));
-							a.push(Math.round((x * halfBase) + base) + "," + Math.round(y * baseSin));
-							a.push(Math.round((x * halfBase) + halfBase) + "," + Math.round((y * baseSin) + baseSin));
+							a.push(Math.round((x * halfBase) - overlapSize - halfBase) + "," + Math.round((y * baseSin) - overlapSize));
+							a.push(Math.round(((x * halfBase) + base) + overlapSize - halfBase) + "," + Math.round((y * baseSin) - overlapSize));
+							a.push(Math.round((x * halfBase)) + "," + Math.round(((y * baseSin) + baseSin) + overlapSize));
 						}
 						s += 'points="' + (a.join(" ")) + '"';
 						s += ' />';
 					}
 				}
-				s += '</svg>';
+				s += '\n</g></g></svg>';
 				console.log(s);
 			},
 			handleSelectImage: function(e) {
