@@ -14,8 +14,8 @@
 					<div  class="toolbar-component">
 						<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
 					</div>
-					<button @click="handleGenerateMosaic" class="btn btn-default">Trixelate</button>
-					<button @click="handleSaveAsSvg" class="btn btn-default">Save SVG</button>
+					<button :disabled="hasImagePath" @click="handleGenerateMosaic" class="btn btn-default">Trixelate (Preview)</button>
+					<button :disabled="hasImagePath" @click="handleSaveAsSvg" class="btn btn-default">Save SVG</button>
 				</div>
 			</div>
 			<div class="row image-preview">
@@ -48,6 +48,9 @@
 				set(value) {
 					this.$store.commit('setBaseWidth', value);
 				}
+			},
+			hasImagePath: function() {
+				return !Boolean(store.state.imagePath.length);
 			},
 			imagePath: function() {
 				return store.state.imagePath;
