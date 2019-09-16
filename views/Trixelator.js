@@ -157,7 +157,16 @@
 					}
 				}
 				s += '\n</g></g></svg>';
-				console.log(s);
+				var path = dialog.showSaveDialog({ title: "Save Trixelation as SVG", defaultPath: store.state.defaultPath });
+				if(path) {
+					path = path.split(".")[0] + ".svg";
+					store.commit("setDefaultPath", path);
+					fs.outputFile(path, s, function(err) {
+						if(err) {
+							console.error(err);
+						}
+					});
+				}
 			},
 			handleSelectImage: function(e) {
 				dialog.showOpenDialog({

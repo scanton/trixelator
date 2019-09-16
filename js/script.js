@@ -1,6 +1,8 @@
 const remote = require('electron').remote;
 const {dialog} = require('electron').remote;
 
+const fs = require('fs-extra');
+
 require('./custom_modules/utils/enableContextMenu.js')();
 
 const stripObservers = function(obj) {
@@ -82,7 +84,8 @@ const store = new Vuex.Store({
 		baseWidth: 20,
 		colorList: [],
 		imagePath: '',
-		sampleSize: 20
+		sampleSize: 20,
+		defaultPath: '/trixelator.svg'
 	},
 	mutations: {
 		colorList: function(state, list) {
@@ -90,6 +93,9 @@ const store = new Vuex.Store({
 		},
 		setBaseWidth: function(state, value) {
 			state.baseWidth = value;
+		},
+		setDefaultPath: function(state, value) {
+			state.defaultPath = value;
 		},
 		setImagePath: function(state, path) {
 			state.imagePath = path;
