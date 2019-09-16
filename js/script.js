@@ -81,10 +81,10 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		baseWidth: 20,
+		baseWidth: 40,
 		colorList: [],
 		imagePath: '',
-		sampleSize: 20,
+		sampleSize: 15,
 		defaultPath: '/trixelator.svg'
 	},
 	mutations: {
