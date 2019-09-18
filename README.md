@@ -26,6 +26,8 @@ npm start
 
 ## Using Trixelator
 
-Trixelator is currently in active development.  The application works, but the features, buttons, functions will be changing rapidly.
+Trixelator is currently in active development.  The application works, click "Select Image" to choose an image from your local machine.  Once loaded, you can resize the window to scale teh image.  Choose the 'Base Width' for all triangles (expressed in pixels) and the 'Sample Size' is how many pixels should be used (square) to define the final color of the triangle.
 
-Detailed instructions to come.  But for now, it is safe to play around with Trixelator.  It works, but will become much more useful soon.
+For example, a Trixelation with a "Base Width" of 40 and a "Sample Size" of 15 will result in a mosaic of equlateral triangles of 40px length on each side.  The color of the triangle will be an average of the 15 (centermost) pixels inside the triangle.
+
+You can play with the Base Width and Sample Size to create Trixelations with large triangular pixels.  A smaller sample size will make your colors more vivid (based on a few pixels) as opposed to a large sample size which can sometime expose more detail, while going too far will result in gray/muted colors.
