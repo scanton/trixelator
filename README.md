@@ -30,4 +30,4 @@ Trixelator is currently in active development.  The application works, click "Se
 
 For example, a Trixelation with a "Base Width" of 40 and a "Sample Size" of 15 will result in a mosaic of equlateral triangles of 40px length on each side.  The color of the triangle will be an average of the 15 (centermost) pixels inside the triangle.
 
-You can play with the Base Width and Sample Size to create Trixelations with large triangular pixels.  A smaller sample size will make your colors more vivid (based on a few pixels) as opposed to a large sample size which can sometime expose more detail, while going too far will result in gray/muted colors.
+You can play with the Base Width and Sample Size to create Trixelations with large triangular pixels.  A smaller sample size will make your colors more vivid (based on a few pixels) as opposed to a large sample size which can sometime expose more detail, while going too far will result in gray/grey/muted colors.
