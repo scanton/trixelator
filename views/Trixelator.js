@@ -115,7 +115,7 @@
 				$(".trixelation-output").html(this.generateMosaic());
 			},
 			handleSaveAsSvg: function(e) {
-				var path = dialog.showSaveDialog({ title: "Save Trixelation as SVG", defaultPath: store.state.defaultPath });
+				var path = dialog.showSaveDialog({ title: "Save Trixelation as SVG", defaultPath: store.state.defaultPath, filters: [{name: "SVG Vector Graphics", extensions: ['svg']}] });
 				if(path) {
 					path = path.split(".")[0] + ".svg";
 					store.commit("setDefaultPath", path);

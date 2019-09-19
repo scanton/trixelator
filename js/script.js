@@ -85,7 +85,7 @@ const store = new Vuex.Store({
 		colorList: [],
 		imagePath: '',
 		sampleSize: 15,
-		defaultPath: '/trixelator.svg'
+		defaultPath: 'trixelator.svg'
 	},
 	mutations: {
 		colorList: function(state, list) {
