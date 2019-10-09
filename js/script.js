@@ -85,7 +85,9 @@ const store = new Vuex.Store({
 		colorList: [],
 		imagePath: '',
 		sampleSize: 15,
-		defaultPath: 'trixelator.svg'
+		defaultPath: 'trixelator.svg',
+		showColorManager: false,
+		savedPalettes: []
 	},
 	mutations: {
 		colorList: function(state, list) {
@@ -97,11 +99,17 @@ const store = new Vuex.Store({
 		setDefaultPath: function(state, value) {
 			state.defaultPath = value;
 		},
+		setSavedPalettes: function(state, arr) {
+			state.savedPalettes = arr;
+		},
 		setImagePath: function(state, path) {
 			state.imagePath = path;
 		},
 		setSampleSize: function(state, value) {
 			state.sampleSize = value;
+		},
+		toggleColorManager: function(state) {
+			state.showColorManager = !state.showColorManager;
 		}
 	}
 });
@@ -109,4 +117,25 @@ const store = new Vuex.Store({
 const vm = new Vue({
 	el: '#main-app',
 	store: store
+});
+
+var paletteDirectory = __dirname + '/palettes';
+fs.pathExists(paletteDirectory, (err, exists) => {
+	if(exists) {
+		fs.readdir(paletteDirectory, (err, files) => {
+			if(err) {
+				console.error(err);
+			}
+			var a = [];
+			var l = files.length;
+			var holder;
+			while(l--) {
+				holder = files[l].split(".");
+				if(holder.length == 2 && holder[1].toLowerCase() == 'json') {
+					a.push(holder[0]);
+				}
+			}
+			store.commit("setSavedPalettes", a);
+		});
+	}
 });

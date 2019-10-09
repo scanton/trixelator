@@ -4,6 +4,10 @@
 		<div class="` + componentName + ` container-fluid">
 			<div class="row inputs">
 				<div class="col-sm-12">
+					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button">
+						<span class="glyphicon glyphicon-modal-window"></span>
+						Colors
+					</button>
 					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button">
 						<span class="glyphicon glyphicon-camera"></span>
 						<span class="watermark-label">Select Image</span>
@@ -25,7 +29,7 @@
 			</div>
 			<div class="row mosaic-output">
 				<div class="col-sm-12">
-					<div class="trixelation-output">
+					<div class="trixelation-output" @click="handleTrixelClick">
 						<svg></svg>
 					</div>
 				</div>
@@ -111,6 +115,9 @@
 				s += '\n</g></g></svg>';
 				return s;
 			},
+			handleColorToggle: function() {
+				this.$store.commit('toggleColorManager');
+			},
 			handleGenerateMosaic: function(e) {
 				$(".trixelation-output").html(this.generateMosaic());
 			},
@@ -137,6 +144,12 @@
 						store.commit("setImagePath", result[0]);
 					}
 				});
+			},
+			handleTrixelClick: function(e) {
+				var color = $(e.target).attr("fill");
+				if(color) {
+					console.log(color);
+				}
 			}
 		}
 	});
