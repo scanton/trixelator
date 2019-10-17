@@ -14,9 +14,19 @@ body {
 	width: 300px;
 	background: #999;
 	transition: left .25s ease-out;
+	color: black;
 }
 .color-manager.hide-color-manager {
 	left: -300px;
+}
+.color-manager .palette-mapping-disabled {
+	display: none;
+}
+.color-manager .swatch {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
 }
 .trixelator {
 	background: #333;
@@ -76,7 +86,7 @@ body {
 	width: 30px;
 	height: 30px;
 }
-.select-image-button {
+.toggle-color-manager-button {
 	margin-right: 15px;
 }
 .toolbar-component {
@@ -85,4 +95,8 @@ body {
 }
 .pallette {
 	display: none;
+}
+.color-list {
+	list-style: none;
+	padding: 0;
 }

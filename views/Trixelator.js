@@ -4,13 +4,13 @@
 		<div class="` + componentName + ` container-fluid">
 			<div class="row inputs">
 				<div class="col-sm-12">
-					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button">
-						<span class="glyphicon glyphicon-modal-window"></span>
-						Colors
-					</button>
 					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button">
 						<span class="glyphicon glyphicon-camera"></span>
 						<span class="watermark-label">Select Image</span>
+					</button>
+					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button">
+						<span class="glyphicon glyphicon-modal-window"></span>
+						<span class="watermark-label">Colors</span>
 					</button>
 					<div  class="toolbar-component">
 						<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
@@ -94,7 +94,11 @@
 				for(y = 0; y < heightSteps; y++) {
 					for(x = 0; x < widthSteps; x++) {
 						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, this.sampleSize, this.sampleSize).data);
-						color = getHexColorFromData(pixelData);
+						if(store.state.isPaletteMappingEnabled) {
+							color = getHexColorFromMap(pixelData);
+						} else {
+							color = getHexColorFromData(pixelData);
+						}
 						hsl = rgbToHsl(pixelData[0], pixelData[1], pixelData[2]);
 						pointUp = (x + y) % 2 ? 'point-up' : '';
 						a = [];

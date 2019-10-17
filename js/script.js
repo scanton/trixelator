@@ -69,8 +69,31 @@ const componentToHex = function (c) {
 	var hex = c.toString(16);
 	return hex.length == 1 ? "0" + hex : hex;
 }
+const hexToComponent = function(hex) {
+	return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16), 255];
+}
 const getHexColorFromData = function(data) {
 	return '#' + componentToHex(data[0]) + componentToHex(data[1]) + componentToHex(data[2]);
+}
+const getHexColorFromMap = function(data) {
+	if(store.state.paletteData && store.state.paletteData.colors) {
+		var c, d, componentColor, bestColor;
+		var diff = Number.POSITIVE_INFINITY;
+		var colors = store.state.paletteData.colors;
+		var l = colors.length;
+		while(l--) {
+			c = colors[l];
+			componentColor = hexToComponent(c);
+			d = Math.abs(componentColor[0] - data[0]) + Math.abs(componentColor[1] - data[1]) + Math.abs(componentColor[1] - data[1]);
+			if(d < diff) {
+				bestColor = c;
+				diff = d;
+			}
+		}
+		return bestColor;
+	} else {
+		return getHexColorFromData(data);
+	}
 }
 
 const eqRad = toRadians(60);
@@ -87,7 +110,24 @@ const store = new Vuex.Store({
 		sampleSize: 15,
 		defaultPath: 'trixelator.svg',
 		showColorManager: false,
-		savedPalettes: []
+		savedPalettes: [],
+		isPaletteMappingEnabled: false,
+		paletteData: {}
+	},
+	actions: {
+		loadPalette: function({commit, state}, name) {
+			return new Promise((resolve, reject) => {
+				fs.readJson(paletteDirectory + '/' + name + '.json', function(err, data) {
+					if(err) {
+						console.error(err);
+						reject(err);
+					} else {
+						store.commit("setPalette", data);
+						resolve(data);
+					}
+				});
+			});
+		}
 	},
 	mutations: {
 		colorList: function(state, list) {
@@ -98,6 +138,9 @@ const store = new Vuex.Store({
 		},
 		setDefaultPath: function(state, value) {
 			state.defaultPath = value;
+		},
+		setPalette: function(state, paletteData) {
+			state.paletteData = paletteData;
 		},
 		setSavedPalettes: function(state, arr) {
 			state.savedPalettes = arr;
@@ -110,6 +153,9 @@ const store = new Vuex.Store({
 		},
 		toggleColorManager: function(state) {
 			state.showColorManager = !state.showColorManager;
+		},
+		togglePaletteMapping: function(state) {
+			state.isPaletteMappingEnabled = !state.isPaletteMappingEnabled;
 		}
 	}
 });
@@ -119,7 +165,7 @@ const vm = new Vue({
 	store: store
 });
 
-var paletteDirectory = __dirname + '/palettes';
+const paletteDirectory = __dirname + '/palettes';
 fs.pathExists(paletteDirectory, (err, exists) => {
 	if(exists) {
 		fs.readdir(paletteDirectory, (err, files) => {
@@ -136,6 +182,9 @@ fs.pathExists(paletteDirectory, (err, exists) => {
 				}
 			}
 			store.commit("setSavedPalettes", a);
+			if(a.length) {
+				store.dispatch("loadPalette", a[0]);
+			}
 		});
 	}
 });
