@@ -8,6 +8,10 @@
 						<span class="glyphicon glyphicon-camera"></span>
 						<span class="watermark-label">Select Image</span>
 					</button>
+					<button :disabled="hasImagePath" @click="handleGetNewPaletteName" class="btn btn-default sample-colors-button">
+						<span class="glyphicon glyphicon-new-window"></span>
+						<span class="watermark-label">Sample Palette</span>
+					</button>
 					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button">
 						<span class="glyphicon glyphicon-modal-window"></span>
 						<span class="watermark-label">Colors</span>
@@ -124,6 +128,13 @@
 			},
 			handleGenerateMosaic: function(e) {
 				$(".trixelation-output").html(this.generateMosaic());
+			},
+			handleGetNewPaletteName: function(e) {
+				store.commit("showPaletteNameView");
+			},
+			handleSampleColors: function(e) {
+			
+			
 			},
 			handleSaveAsSvg: function(e) {
 				var path = dialog.showSaveDialog({ title: "Save Trixelation as SVG", defaultPath: store.state.defaultPath, filters: [{name: "SVG Vector Graphics", extensions: ['svg']}] });

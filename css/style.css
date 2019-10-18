@@ -6,6 +6,23 @@ body {
 #main-app {
 	position: relative;
 }
+.palette-name-view {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, .5);
+}
+.palette-name-view.hidden {
+	display: none;
+}
+.palette-name-view .dialog {
+	background: #444;
+	padding: 1em;
+	margin: 3em;
+	border-radius: 10px;
+}
 .color-manager {
 	position: absolute;
 	top: 0;

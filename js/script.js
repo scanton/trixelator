@@ -112,7 +112,8 @@ const store = new Vuex.Store({
 		showColorManager: false,
 		savedPalettes: [],
 		isPaletteMappingEnabled: false,
-		paletteData: {}
+		paletteData: {},
+		isPaletteNameFormVisible: false
 	},
 	actions: {
 		loadPalette: function({commit, state}, name) {
@@ -133,6 +134,37 @@ const store = new Vuex.Store({
 		colorList: function(state, list) {
 			state.colorList = list;
 		},
+		createNewPalette: function(state, name) {
+			var base = Number(store.state.baseWidth);
+			var halfBase = base / 2;
+			var baseSin = base * eqSin;
+			var img = document.getElementById("trixelator-target");
+			var canvas = document.createElement("canvas");
+			canvas.width = img.width;
+			canvas.height = img.height;
+			canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+			var widthSteps = Math.floor(img.width / halfBase);
+			var heightSteps = Math.floor(img.height / baseSin);
+			var x, y, pixelData, a, color;
+			a = [];
+			for(y = 0; y < heightSteps; y++) {
+				for(x = 0; x < widthSteps; x++) {
+					pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, store.state.sampleSize, store.state.sampleSize).data);
+					color = getHexColorFromData(pixelData).toLowerCase();
+					if(a.indexOf(color) == -1) {
+						a.push(color);
+					}
+				}
+			}
+			fs.writeJson(paletteDirectory + '/' + name + '.json', {name: name, colors: a}, function(err) {
+				if(!err) {
+					store.dispatch("loadPalette", name);
+				}
+			});
+		},
+		hidePaletteNameView: function(state) {
+			state.isPaletteNameFormVisible = false;
+		},
 		setBaseWidth: function(state, value) {
 			state.baseWidth = value;
 		},
@@ -140,6 +172,11 @@ const store = new Vuex.Store({
 			state.defaultPath = value;
 		},
 		setPalette: function(state, paletteData) {
+			paletteData.colors.sort(function(a, b) {
+				var aC = hexToComponent(a);
+				var bC = hexToComponent(b);
+				return (bC[0] - aC[0]) + (bC[1] - aC[1]) + (bC[2] - aC[2]);
+			});
 			state.paletteData = paletteData;
 		},
 		setSavedPalettes: function(state, arr) {
@@ -150,6 +187,9 @@ const store = new Vuex.Store({
 		},
 		setSampleSize: function(state, value) {
 			state.sampleSize = value;
+		},
+		showPaletteNameView: function(state) {
+			state.isPaletteNameFormVisible = true;
 		},
 		toggleColorManager: function(state) {
 			state.showColorManager = !state.showColorManager;
