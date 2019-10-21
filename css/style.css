@@ -6,7 +6,10 @@ body {
 #main-app {
 	position: relative;
 }
-.palette-name-view {
+.clear {
+	clear: both;
+}
+.modal-view {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -14,24 +17,38 @@ body {
 	right: 0;
 	background: rgba(0, 0, 0, .5);
 }
-.palette-name-view.hidden {
+.modal-view input {
+	width: 100%;
+	padding: .5em;
+	border-radius: 5px;
+	background: #222;
+	color: white;
+	margin-bottom: .25em;
+	border: 1px solid #555;
+	display: inline-block;
+}
+.modal-view.hidden {
 	display: none;
 }
-.palette-name-view .dialog {
+.modal-view .btn-warning {
+	margin-right: 1.5em;
+}
+.modal-view .dialog {
 	background: #444;
-	padding: 1em;
-	margin: 3em;
+	padding: 2em;
+	margin: 10em;
 	border-radius: 10px;
 }
 .color-manager {
-	position: absolute;
-	top: 0;
+	position: fixed;
+	top: 50px;
 	left: 0;
 	bottom: 0;
 	width: 300px;
 	background: #999;
 	transition: left .25s ease-out;
 	color: black;
+	overflow: scroll;
 }
 .color-manager.hide-color-manager {
 	left: -300px;
@@ -71,6 +88,7 @@ body {
     background: #333333;
     right: 0;
     height: 50px;
+    overflow: scroll;
 }
 .row.inputs input {
 	margin-right: 1em;

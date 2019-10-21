@@ -15,8 +15,15 @@
 							<option v-for="palett in savedPalettes">{{palett}}</option>
 						</select>
 					</div>
-					<div class="col-xs-12">
-						<h3>{{selectedPaletteName}}</h3>
+					<div class="col-xs-12 palette-contro">
+						<h3>{{selectedPaletteName}} <sup>({{totalColors}} colors)</sup></h3>
+						<div class="siplification-controls">
+							<button @click="handleSimplifyPalette" class="btn btn-default">Simplify Palette</button>
+							<button :disabled="hasImagePath" @click="handleGetNewPaletteName" class="btn btn-default sample-colors-button">
+								<span class="glyphicon glyphicon-new-window"></span>
+								<span class="watermark-label">Sample Palette</span>
+							</button>
+						</div>
 						<ul class="color-list">
 							<li v-for="color in colors"><span class="swatch" :style="'background: ' + color"></span> {{color}}</li>
 						</ul>
@@ -34,6 +41,9 @@
 			colors: function() {
 				return store.state.paletteData.colors;
 			},
+			hasImagePath: function() {
+				return !Boolean(store.state.imagePath.length);
+			},
 			isPaletteMappingEnabled: function() {
 				return store.state.isPaletteMappingEnabled;
 			},
@@ -48,6 +58,12 @@
 					return store.state.paletteData.name;
 				}
 				return "";
+			},
+			totalColors: function() {
+				if(store.state.paletteData && store.state.paletteData.colors) {
+					return store.state.paletteData.colors.length;
+				}
+				return 0;
 			}
 		},
 		props: [],
@@ -56,8 +72,14 @@
 			return {}
 		},
 		methods: {
+			handleGetNewPaletteName: function(e) {
+				store.commit("showPaletteNameView");
+			},
 			handlePaletteSelect: function(e) {
 				store.dispatch("loadPalette", e.target.value);
+			},
+			handleSimplifyPalette: function(e) {
+				store.commit("showSimplifyPaletteView");
 			},
 			togglePaletteMapping: function(e) {
 				store.commit("togglePaletteMapping");

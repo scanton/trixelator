@@ -95,6 +95,22 @@ const getHexColorFromMap = function(data) {
 		return getHexColorFromData(data);
 	}
 }
+const minColorDiff = function(color, data) {
+	var diff = Number.POSITIVE_INFINITY;
+	var l = data.length;
+	var d, colorDiff;
+	while(l--) {
+		d = data[l];
+		colorDiff = Math.abs(d[0] - color[0]) + Math.abs(d[1] - color[1]) + Math.abs(d[2] - color[2]);
+		diff = Math.min(diff, colorDiff);
+	}
+	return diff;
+}
+const colorSort = function(a, b) {
+	var aC = hexToComponent(a);
+	var bC = hexToComponent(b);
+	return (bC[0] - aC[0]) + (bC[1] - aC[1]) + (bC[2] - aC[2]);
+}
 
 const eqRad = toRadians(60);
 const eqSin = Math.sin(eqRad);
@@ -113,7 +129,8 @@ const store = new Vuex.Store({
 		savedPalettes: [],
 		isPaletteMappingEnabled: false,
 		paletteData: {},
-		isPaletteNameFormVisible: false
+		isPaletteNameFormVisible: false,
+		isSimplifyPaletteViewVisible: false
 	},
 	actions: {
 		loadPalette: function({commit, state}, name) {
@@ -165,6 +182,9 @@ const store = new Vuex.Store({
 		hidePaletteNameView: function(state) {
 			state.isPaletteNameFormVisible = false;
 		},
+		hideSimplifyPaletteView: function(state) {
+			state.isSimplifyPaletteViewVisible = false;
+		},
 		setBaseWidth: function(state, value) {
 			state.baseWidth = value;
 		},
@@ -172,11 +192,7 @@ const store = new Vuex.Store({
 			state.defaultPath = value;
 		},
 		setPalette: function(state, paletteData) {
-			paletteData.colors.sort(function(a, b) {
-				var aC = hexToComponent(a);
-				var bC = hexToComponent(b);
-				return (bC[0] - aC[0]) + (bC[1] - aC[1]) + (bC[2] - aC[2]);
-			});
+			paletteData.colors.sort(colorSort);
 			state.paletteData = paletteData;
 		},
 		setSavedPalettes: function(state, arr) {
@@ -191,11 +207,17 @@ const store = new Vuex.Store({
 		showPaletteNameView: function(state) {
 			state.isPaletteNameFormVisible = true;
 		},
+		showSimplifyPaletteView: function(state) {
+			state.isSimplifyPaletteViewVisible = true;
+		},
 		toggleColorManager: function(state) {
 			state.showColorManager = !state.showColorManager;
 		},
 		togglePaletteMapping: function(state) {
 			state.isPaletteMappingEnabled = !state.isPaletteMappingEnabled;
+		},
+		updateCurrentPalette: function(state, colors) {
+			state.paletteData.colors = colors;
 		}
 	}
 });

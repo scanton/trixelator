@@ -1,7 +1,7 @@
 (function() {
 	var componentName = 'palette-name-view';
 	var s = `
-		<div :class="isVisible ? '' : 'hidden'" class="` + componentName + `">
+		<div :class="isVisible ? '' : 'hidden'" class="` + componentName + ` modal-view">
 			<div class="dialog">
 				<h2>Create New Palette</h2>
 				<form>
@@ -47,6 +47,7 @@
 				e.preventDefault();
 				if(this.name.length) {
 					store.commit("createNewPalette", this.name);
+					store.commit("hidePaletteNameView");
 				}
 			}
 		}
