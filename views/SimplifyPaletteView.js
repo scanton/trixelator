@@ -9,7 +9,13 @@
 						Remove colors within: <input type="number" v-model="simplificationFactor" />
 					</div>
 					<div>
-						<button @click="handleSimplifyPalette" class="btn btn-success pull-right pull-right">
+						Save Result: <input type="checkbox" v-model="saveResults" />
+					</div>
+					<div v-show="saveResults">
+						Save As: <input type="text" v-model="saveAs" />
+					</div>
+					<div>
+						<button :disabled="(saveResults && !saveAs.length)" @click="handleSimplifyPalette" class="btn btn-success pull-right pull-right">
 							Simplify Palette
 						</button>
 						<button @click="handleCancel" class="btn btn-warning pull-right pull-right">
@@ -35,7 +41,10 @@
 		template: s,
 		data: function() {
 			return {
+				saveAs: '',
+				saveResults: false,
 				simplificationFactor: 10
+
 			}
 		},
 		methods: {

@@ -27,6 +27,10 @@ body {
 	border: 1px solid #555;
 	display: inline-block;
 }
+.modal-view input[type="checkbox"] {
+	display: inline;
+	width: 30px;
+}
 .modal-view.hidden {
 	display: none;
 }
