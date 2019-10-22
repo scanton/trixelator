@@ -53,6 +53,7 @@ body {
 	transition: left .25s ease-out;
 	color: black;
 	overflow: scroll;
+    padding: 1em;
 }
 .color-manager.hide-color-manager {
 	left: -300px;
@@ -92,7 +93,7 @@ body {
     background: #333333;
     right: 0;
     height: 50px;
-    overflow: scroll;
+    overflow: hidden;
 }
 .row.inputs input {
 	margin-right: 1em;
@@ -107,19 +108,6 @@ body {
 .trixelation {
 	position: relative;
 }
-/*
-.trixel {
-	display: inline-block;
-	position: absolute;
-	border-top: 22px solid #999;
-	border-left: 13px solid transparent !important;
-	border-right: 13px solid transparent !important;
-}
-.trixel.point-up {
-	border-bottom: 22px solid #999;
-	border-top-width: 0;
-}
-*/
 .pallette-swatch {
 	float: left;
 	width: 30px;
@@ -138,4 +126,12 @@ body {
 .color-list {
 	list-style: none;
 	padding: 0;
+}
+.modal-dialog-view .dialog-buttons {
+	display: inline-block;
+	margin-top: 1em;
+}
+.siplification-controls {
+	margin-top: .75em;
+	margin-bottom: 1em;
 }

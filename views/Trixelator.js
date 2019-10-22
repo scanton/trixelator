@@ -6,20 +6,22 @@
 				<div class="col-sm-12">
 					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button">
 						<span class="glyphicon glyphicon-camera"></span>
-						<span class="watermark-label">Select Image</span>
+						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Select Image</span>
 					</button>
 					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button">
 						<span class="glyphicon glyphicon-modal-window"></span>
-						<span class="watermark-label">Colors</span>
+						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Colors</span>
 					</button>
 					<div  class="toolbar-component">
-						<span>Base Width</span><input type="number" step="1" v-model="baseWidth" />
+						<span>Base <span class="visible-lg-inline-block visible-md-inline-block">Width</span></span><input type="number" step="1" v-model="baseWidth" />
 					</div>
 					<div  class="toolbar-component">
-						<span>Sample Size</span><input type="number" step="1" v-model="sampleSize" />
+						<span>Sample <span class="visible-lg-inline-block visible-md-inline-block">Size</span></span><input type="number" step="1" v-model="sampleSize" />
 					</div>
-					<button :disabled="hasImagePath" @click="handleGenerateMosaic" class="btn btn-default">Trixelate (Preview)</button>
-					<button :disabled="hasImagePath" @click="handleSaveAsSvg" class="btn btn-default">Save SVG</button>
+					<button :disabled="hasImagePath" @click="handleGenerateMosaic" class="btn btn-default">Trixelate<span class="visible-lg-inline-block visible-md-inline-block"> (Preview)</span></button>
+					<button :disabled="hasImagePath" @click="handleSaveAsSvg" class="btn btn-default">Save<span class="visible-lg-inline-block visible-md-inline-block">SVG</span></button>
+
+					<!--<button @click="testModal" class="btn btn-default">Test Modal</button>-->
 				</div>
 			</div>
 			<div class="row image-preview">
@@ -74,6 +76,28 @@
 			return {}
 		},
 		methods: {
+			testModal: function(e) {
+				store.commit("showModalDialog", {
+					title: "Modal Dialog Test",
+					body: "This is a test of the Modal Dialog System.  This is only a test...",
+					buttons: [
+						{
+							label: "Cancel",
+							class: "btn btn-warning",
+							handler: function(e) {
+								store.commit("hideModalDialog");
+							}
+						},
+						{
+							label: "Do it",
+							class: "btn btn-danger",
+							handler: function(e) {
+								console.log("consider it done");
+							}
+						}
+					]
+				});
+			},
 			generateMosaic: function(e) {
 				var base = Number(this.baseWidth);
 				var halfBase = base / 2;

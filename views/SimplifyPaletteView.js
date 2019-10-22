@@ -44,7 +44,6 @@
 				saveAs: '',
 				saveResults: false,
 				simplificationFactor: 10
-
 			}
 		},
 		methods: {

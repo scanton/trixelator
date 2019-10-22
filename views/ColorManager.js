@@ -11,19 +11,25 @@
 				</div>
 				<div :class="isPaletteMappingEnabled ? 'palette-mapping-enabled' : 'palette-mapping-disabled'" class="row">
 					<div class="col-xs-12">
+						<div class="siplification-controls">
+							<button @click="handleSimplifyPalette" class="btn btn-default">
+								<span class="glyphicon glyphicon-filter"></span>
+								<span class="watermark-label">Simplify</span>
+							</button>
+							<button :disabled="hasImagePath" @click="handleGetNewPaletteName" class="btn btn-default sample-colors-button">
+								<span class="glyphicon glyphicon-new-window"></span>
+								<span class="watermark-label">Sample</span>
+							</button>
+						</div>
+					</div>
+					<div class="cols-xs-12">
 						<select @change="handlePaletteSelect">
 							<option v-for="palett in savedPalettes">{{palett}}</option>
 						</select>
+						({{totalColors}} colors)
 					</div>
 					<div class="col-xs-12 palette-contro">
-						<h3>{{selectedPaletteName}} <sup>({{totalColors}} colors)</sup></h3>
-						<div class="siplification-controls">
-							<button @click="handleSimplifyPalette" class="btn btn-default">Simplify Palette</button>
-							<button :disabled="hasImagePath" @click="handleGetNewPaletteName" class="btn btn-default sample-colors-button">
-								<span class="glyphicon glyphicon-new-window"></span>
-								<span class="watermark-label">Sample Palette</span>
-							</button>
-						</div>
+						<h3>{{selectedPaletteName}}</h3>
 						<ul class="color-list">
 							<li v-for="color in colors"><span class="swatch" :style="'background: ' + color"></span> {{color}}</li>
 						</ul>

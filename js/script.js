@@ -130,7 +130,11 @@ const store = new Vuex.Store({
 		isPaletteMappingEnabled: false,
 		paletteData: {},
 		isPaletteNameFormVisible: false,
-		isSimplifyPaletteViewVisible: false
+		isSimplifyPaletteViewVisible: false,
+		isModalDialogVisible: false,
+		modalDialogTitle: '',
+		modalDialogBody: '',
+		modalDialogButtons: []
 	},
 	actions: {
 		loadPalette: function({commit, state}, name) {
@@ -179,6 +183,9 @@ const store = new Vuex.Store({
 				}
 			});
 		},
+		hideModalDialog: function(state) {
+			state.isModalDialogVisible = false;
+		},
 		hidePaletteNameView: function(state) {
 			state.isPaletteNameFormVisible = false;
 		},
@@ -203,6 +210,16 @@ const store = new Vuex.Store({
 		},
 		setSampleSize: function(state, value) {
 			state.sampleSize = value;
+		},
+		showModalDialog: function(state, args) {
+			if(args && args.title && args.body && args.buttons) {
+				state.modalDialogTitle = args.title;
+				state.modalDialogBody = args.body;
+				state.modalDialogButtons = args.buttons;
+				state.isModalDialogVisible = true;
+			} else {
+				console.error("insufficient modal args: ", args);
+			}
 		},
 		showPaletteNameView: function(state) {
 			state.isPaletteNameFormVisible = true;
