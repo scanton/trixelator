@@ -137,6 +137,35 @@ const store = new Vuex.Store({
 		modalDialogButtons: []
 	},
 	actions: {
+		initPalette: function({commit, state}, paletteName) {
+			return new Promise((resolve, reject) => {
+				fs.pathExists(paletteDirectory, (err, exists) => {
+					if(exists) {
+						fs.readdir(paletteDirectory, (err, files) => {
+							if(err) {
+								reject(err);
+							}
+							var a = [];
+							var l = files.length;
+							var holder;
+							while(l--) {
+								holder = files[l].split(".");
+								if(holder.length == 2 && holder[1].toLowerCase() == 'json') {
+									a.push(holder[0]);
+								}
+							}
+							store.commit("setSavedPalettes", a);
+							resolve();
+							if(paletteName) {
+								store.dispatch("loadPalette", paletteName);
+							} else if(a.length) {
+								store.dispatch("loadPalette", a[0]);
+							}
+						});
+					}
+				});
+			});
+		},
 		loadPalette: function({commit, state}, name) {
 			return new Promise((resolve, reject) => {
 				fs.readJson(paletteDirectory + '/' + name + '.json', function(err, data) {
@@ -148,6 +177,19 @@ const store = new Vuex.Store({
 						resolve(data);
 					}
 				});
+			});
+		},
+		savePalette: function({commit, state}, args) {
+			return new Promise((resolve, reject) => {
+				if(args.name && args.colors) {
+					fs.writeJson(paletteDirectory + "/" + args.name + ".json", args, function(err) {
+						if(err) {
+							reject(err);
+						} else {
+							resolve();
+						}
+					});
+				}
 			});
 		}
 	},
@@ -245,25 +287,5 @@ const vm = new Vue({
 });
 
 const paletteDirectory = __dirname + '/palettes';
-fs.pathExists(paletteDirectory, (err, exists) => {
-	if(exists) {
-		fs.readdir(paletteDirectory, (err, files) => {
-			if(err) {
-				console.error(err);
-			}
-			var a = [];
-			var l = files.length;
-			var holder;
-			while(l--) {
-				holder = files[l].split(".");
-				if(holder.length == 2 && holder[1].toLowerCase() == 'json') {
-					a.push(holder[0]);
-				}
-			}
-			store.commit("setSavedPalettes", a);
-			if(a.length) {
-				store.dispatch("loadPalette", a[0]);
-			}
-		});
-	}
-});
+
+store.dispatch("initPalette");

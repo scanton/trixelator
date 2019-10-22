@@ -9,7 +9,7 @@
 						Remove colors within: <input type="number" v-model="simplificationFactor" />
 					</div>
 					<div>
-						Save Result: <input type="checkbox" v-model="saveResults" />
+						Save Result: <input type="checkbox" @change="handleSaveResultChange" v-model="saveResults" />
 					</div>
 					<div v-show="saveResults">
 						Save As: <input type="text" v-model="saveAs" />
@@ -51,6 +51,13 @@
 				e.preventDefault();
 				store.commit("hideSimplifyPaletteView");
 			},
+			handleSaveResultChange: function(e) {
+				if(this.saveResults) {
+					this.saveAs = store.state.paletteData.name;
+				} else {
+					this.saveAs = '';
+				}
+			},
 			handleSimplifyPalette: function(e) {
 				e.preventDefault();
 				var f = this.simplificationFactor;
@@ -69,7 +76,10 @@
 					}
 				}
 				a.sort(colorSort);
-				store.commit("updateCurrentPalette", a);
+				//store.commit("updateCurrentPalette", a);
+				store.dispatch("savePalette", {name: this.saveAs, colors: a}).then(() => {
+					store.dispatch("initPalette", this.saveAs);
+				});
 				store.commit("hideSimplifyPaletteView");
 			}
 		}
