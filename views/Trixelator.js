@@ -4,11 +4,15 @@
 		<div class="` + componentName + ` container-fluid">
 			<div class="row inputs">
 				<div class="col-sm-12">
-					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button">
+					<button @click="handleSelectImage" :class="{'show-anyway': !imagePath}" class="btn btn-default select-image-button" title="Select Image">
 						<span class="glyphicon glyphicon-camera"></span>
 						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Select Image</span>
 					</button>
-					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button">
+					<button @click="toggleSubSelect" class="btn btn-default toggle-sub-select-button" title="Sub Select">
+						<span class="glyphicon glyphicon-picture"></span>
+						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Sub-Select</span>
+					</button>
+					<button @click="handleColorToggle" class="btn btn-default toggle-color-manager-button" title="Colors">
 						<span class="glyphicon glyphicon-modal-window"></span>
 						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Colors</span>
 					</button>
@@ -18,18 +22,24 @@
 					<div  class="toolbar-component">
 						<span>Sample <span class="visible-lg-inline-block visible-md-inline-block">Size</span></span><input type="number" step="1" v-model="sampleSize" />
 					</div>
-					<button :disabled="hasImagePath" @click="handleGenerateMosaic" class="btn btn-default">Trixelate<span class="visible-lg-inline-block visible-md-inline-block"> (Preview)</span></button>
-					<button :disabled="hasImagePath" @click="handleSaveAsSvg" class="btn btn-default">Save<span class="visible-lg-inline-block visible-md-inline-block">SVG</span></button>
+					<button :disabled="!hasImagePath" @click="handleGenerateMosaic" class="btn btn-default trixelate-button" title="Trixelate">
+						<span class="glyphicon glyphicon-play"></span>
+						<span class="visible-lg-inline-block visible-md-inline-block">Trixelate (Preview)</span>
+					</button>
+					<button :disabled="!hasImagePath" @click="handleSaveAsSvg" class="btn btn-default" title="Save SVG">
+						<span class="glyphicon glyphicon-save"></span>
+						<span class="visible-lg-inline-block visible-md-inline-block">Save SVG</span>
+					</button>
 
 					<!--<button @click="testModal" class="btn btn-default">Test Modal</button>-->
 				</div>
 			</div>
-			<div class="row image-preview">
+			<div class="row image-preview" v-show="hasImagePath">
 				<div class="col-sm-12">
 					<img id="trixelator-target" :src="imagePath" />
 				</div>
 			</div>
-			<div class="row mosaic-output">
+			<div class="row mosaic-output" v-show="hasImagePath">
 				<div class="col-sm-12">
 					<div class="trixelation-output" @click="handleTrixelClick">
 						<svg></svg>
@@ -56,7 +66,7 @@
 				}
 			},
 			hasImagePath: function() {
-				return !Boolean(store.state.imagePath.length);
+				return Boolean(store.state.imagePath.length);
 			},
 			imagePath: function() {
 				return store.state.imagePath;
@@ -182,6 +192,10 @@
 				if(color) {
 					console.log(color);
 				}
+			},
+			toggleSubSelect: function(e) {
+				e.preventDefault();
+				store.commit("toggleSubSelect");
 			}
 		}
 	});

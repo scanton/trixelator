@@ -134,7 +134,8 @@ const store = new Vuex.Store({
 		isModalDialogVisible: false,
 		modalDialogTitle: '',
 		modalDialogBody: '',
-		modalDialogButtons: []
+		modalDialogButtons: [],
+		isUsingSubSelect: false
 	},
 	actions: {
 		initPalette: function({commit, state}, paletteName) {
@@ -182,7 +183,7 @@ const store = new Vuex.Store({
 		savePalette: function({commit, state}, args) {
 			return new Promise((resolve, reject) => {
 				if(args.name && args.colors) {
-					fs.writeJson(paletteDirectory + "/" + args.name + ".json", args, function(err) {
+					fs.writeJson(paletteDirectory + "/" + args.name + ".json", args, {spaces: '\t'}, function(err) {
 						if(err) {
 							reject(err);
 						} else {
@@ -219,7 +220,7 @@ const store = new Vuex.Store({
 					}
 				}
 			}
-			fs.writeJson(paletteDirectory + '/' + name + '.json', {name: name, colors: a}, function(err) {
+			fs.writeJson(paletteDirectory + '/' + name + '.json', {name: name, colors: a}, {spaces: '\t'}, function(err) {
 				if(!err) {
 					store.dispatch("loadPalette", name);
 				}
@@ -274,6 +275,9 @@ const store = new Vuex.Store({
 		},
 		togglePaletteMapping: function(state) {
 			state.isPaletteMappingEnabled = !state.isPaletteMappingEnabled;
+		},
+		toggleSubSelect: function(state) {
+			state.isUsingSubSelect = !state.isUsingSubSelect;
 		},
 		updateCurrentPalette: function(state, colors) {
 			state.paletteData.colors = colors;

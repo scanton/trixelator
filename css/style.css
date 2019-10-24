@@ -3,6 +3,9 @@ body {
 	color: #999;
 	padding-top: 50px;
 }
+select {
+	font-size: 12pt;
+}
 #main-app {
 	position: relative;
 }
@@ -127,6 +130,12 @@ body {
 	list-style: none;
 	padding: 0;
 }
+.color-list li {
+	border: 1px solid #666;
+    margin-bottom: .25em;
+    border-radius: 5px;
+    padding: .25em;
+}
 .modal-dialog-view .dialog-buttons {
 	display: inline-block;
 	margin-top: 1em;
@@ -134,4 +143,7 @@ body {
 .siplification-controls {
 	margin-top: .75em;
 	margin-bottom: 1em;
+}
+.toggle-color-manager-button .glyphicon, .trixelate-button .glyphicon {
+	transform: rotate(-90deg);
 }
