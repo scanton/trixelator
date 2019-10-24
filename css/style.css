@@ -147,3 +147,11 @@ select {
 .toggle-color-manager-button .glyphicon, .trixelate-button .glyphicon {
 	transform: rotate(-90deg);
 }
+.focal-input {
+	font-size: 12pt;
+    background: #AAA;
+    border-radius: 5px;
+    padding: .5em;
+    border: 1px solid #777;
+    cursor: pointer;
+}

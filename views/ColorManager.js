@@ -4,8 +4,8 @@
 		<div :class="{'hide-color-manager': !showColorManager}"  class="` + componentName + `">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xs-12">
-						<input type="checkbox" v-model="isPaletteMappingEnabled" @click="togglePaletteMapping" />
+					<div class="col-xs-12 focal-input" @click="togglePaletteMapping">
+						<input type="checkbox" v-model="isPaletteMappingEnabled" />
 						Enable Palette Mapping
 					</div>
 				</div>
