@@ -10,7 +10,7 @@
 					</div>
 				</div>
 				<div :class="isPaletteMappingEnabled ? 'palette-mapping-enabled' : 'palette-mapping-disabled'" class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-12 text-center">
 						<div class="siplification-controls">
 							<button @click="handleSimplifyPalette" class="btn btn-default">
 								<span class="glyphicon glyphicon-filter"></span>
@@ -22,7 +22,7 @@
 							</button>
 						</div>
 					</div>
-					<div class="cols-xs-12">
+					<div class="cols-xs-12 text-center">
 						<select @change="handlePaletteSelect">
 							<option v-for="palett in savedPalettes">{{palett}}</option>
 						</select>
