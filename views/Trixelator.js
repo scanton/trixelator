@@ -36,7 +36,7 @@
 			</div>
 			<div class="row image-preview" v-show="hasImagePath">
 				<div class="col-sm-12">
-					<img id="trixelator-target" :src="imagePath" />
+					<img id="trixelator-target" :src="imagePath" :style="globalFilters" />
 					<div v-show="isUsingSubSelect" class="subselector-overlay">
 						
 					</div>
@@ -67,6 +67,9 @@
 				set(value) {
 					this.$store.commit('setBaseWidth', value);
 				}
+			},
+			globalFilters: function() {
+				return 'filter: ' + store.state.globalFilters + ';';
 			},
 			hasImagePath: function() {
 				return Boolean(store.state.imagePath.length);
@@ -125,7 +128,11 @@
 				var canvas = document.createElement("canvas");
 				canvas.width = img.width;
 				canvas.height = img.height;
-				canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+				var ctx = canvas.getContext('2d');
+				if(store.state.globalFilters.length) {
+					ctx.filter = store.state.globalFilters;
+				}
+				ctx.drawImage(img, 0, 0, img.width, img.height);
 
 				var widthSteps = Math.floor(img.width / halfBase);
 				var heightSteps = Math.floor(img.height / baseSin);
@@ -136,6 +143,9 @@
 				var s = '<?xml version="1.0" encoding="utf-8"?>\n<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" x="0px" y="0px" viewBox="0 0 ' + portWidth + ' ' + portHeight + '" enable-background="new 0 0 ' + portWidth + ' ' + portHeight + '" xml:space="preserve"><g inkscape:groupmode="layer" inkscape:label="Layer 1"><g>';
 				for(y = 0; y < heightSteps; y++) {
 					for(x = 0; x < widthSteps; x++) {
+
+			
+			
 						pixelData = averagePixelData(canvas.getContext('2d').getImageData(x * halfBase, y * baseSin, this.sampleSize, this.sampleSize).data);
 						if(store.state.isPaletteMappingEnabled) {
 							color = getHexColorFromMap(pixelData);

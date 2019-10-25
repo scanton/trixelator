@@ -140,8 +140,9 @@ const store = new Vuex.Store({
 		isColorShiftingEnabled: false,
 		isTrixelLevelAdjustmentEnabled: false,
 		globalColorAdjust: {
-			r: 0, g: 0, b: 0, h: 0, s: 0, l: 0
-		}
+			h: 0, s: 0, l: 0, blur: 0, grayscale: 0, sepia: 0, contrast: 0, invert: 0
+		},
+		globalFilters: ''
 	},
 	actions: {
 		initPalette: function({commit, state}, paletteName) {
@@ -212,7 +213,11 @@ const store = new Vuex.Store({
 			var canvas = document.createElement("canvas");
 			canvas.width = img.width;
 			canvas.height = img.height;
-			canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+			var ctx = canvas.getContext('2d');
+			if(store.state.globalFilters.length) {
+				ctx.filter = store.state.globalFilters;
+			}
+			ctx.drawImage(img, 0, 0, img.width, img.height);
 			var widthSteps = Math.floor(img.width / halfBase);
 			var heightSteps = Math.floor(img.height / baseSin);
 			var x, y, pixelData, a, color;
@@ -300,6 +305,37 @@ const store = new Vuex.Store({
 		updateGlobalColorAdjust: function(state, obj) {
 			for(var i in obj) {
 				state.globalColorAdjust[i] = obj[i];
+			}
+			var c = state.globalColorAdjust;
+			var filterArray = [];
+			if(c.h) {
+				filterArray.push("hue-rotate(" + c.h + "deg)");
+			}
+			if(c.s) {
+				filterArray.push("saturate(" + c.s + ")");	
+			}
+			if(c.l) {
+				filterArray.push("brightness(" + c.l + ")");		
+			}
+			if(c.blur) {
+				filterArray.push("blur(" + c.blur + "px)");			
+			}
+			if(c.grayscale) {
+				filterArray.push("grayscale(" + c.grayscale + ")");				
+			}
+			if(c.sepia) {
+				filterArray.push("sepia(" + c.sepia + ")");
+			}
+			if(c.contrast) {
+				filterArray.push("contrast(" + c.contrast + ")");
+			}
+			if(c.invert) {
+				filterArray.push("invert(" + c.invert + ")");
+			}
+			if(filterArray.length) {
+				state.globalFilters = filterArray.join(" ");
+			} else {
+				state.globalFilters = '';
 			}
 		}
 	}
