@@ -86,10 +86,10 @@ input[type=range][orient=vertical] {
 }
 .image-preview .subselector-overlay {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	top: 10px;
+	bottom: 10px;
+	left: 25px;
+	right: 25px;
 	background: rgba(0, 0, 0, .25);
 }
 .image-preview img {
@@ -176,9 +176,18 @@ input[type=range][orient=vertical] {
     cursor: pointer;
 }
 .range-slider {
+	position: relative;
 	display: inline-block;
-	margin: .5em;
+	margin: .1em;
 }
-.minor-value {
+.range-slider .minor-value {
+	position: absolute;
 	font-size: 8pt;
+	bottom: -15px;
+	left: -3px;
 }
+/*
+.image-preview img {
+	filter: grayscale(100%);
+}
+*/
