@@ -123,6 +123,7 @@ const store = new Vuex.Store({
 		baseWidth: 40,
 		colorList: [],
 		imagePath: '',
+		trixelationOutput: '',
 		sampleSize: 15,
 		defaultPath: 'trixelator.svg',
 		showColorManager: false,
@@ -135,7 +136,12 @@ const store = new Vuex.Store({
 		modalDialogTitle: '',
 		modalDialogBody: '',
 		modalDialogButtons: [],
-		isUsingSubSelect: false
+		isUsingSubSelect: false,
+		isColorShiftingEnabled: false,
+		isTrixelLevelAdjustmentEnabled: false,
+		globalColorAdjust: {
+			r: 0, g: 0, b: 0, h: 0, s: 0, l: 0
+		}
 	},
 	actions: {
 		initPalette: function({commit, state}, paletteName) {
@@ -254,6 +260,9 @@ const store = new Vuex.Store({
 		setSampleSize: function(state, value) {
 			state.sampleSize = value;
 		},
+		setTrixelationOutput: function(state, value) {
+			state.trixelationOutput = value;
+		},
 		showModalDialog: function(state, args) {
 			if(args && args.title && args.body && args.buttons) {
 				state.modalDialogTitle = args.title;
@@ -273,14 +282,25 @@ const store = new Vuex.Store({
 		toggleColorManager: function(state) {
 			state.showColorManager = !state.showColorManager;
 		},
+		toggleColorShifting: function(state) {
+			state.isColorShiftingEnabled = !state.isColorShiftingEnabled;
+		},
 		togglePaletteMapping: function(state) {
 			state.isPaletteMappingEnabled = !state.isPaletteMappingEnabled;
 		},
 		toggleSubSelect: function(state) {
 			state.isUsingSubSelect = !state.isUsingSubSelect;
 		},
+		toggleTrixelLevelAdjustment: function(state) {
+			state.isTrixelLevelAdjustmentEnabled = !state.isTrixelLevelAdjustmentEnabled;
+		},
 		updateCurrentPalette: function(state, colors) {
 			state.paletteData.colors = colors;
+		},
+		updateGlobalColorAdjust: function(state, obj) {
+			for(var i in obj) {
+				state.globalColorAdjust[i] = obj[i];
+			}
 		}
 	}
 });

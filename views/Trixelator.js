@@ -8,7 +8,7 @@
 						<span class="glyphicon glyphicon-camera"></span>
 						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Select Image</span>
 					</button>
-					<button @click="toggleSubSelect" class="btn btn-default toggle-sub-select-button" title="Sub Select">
+					<button v-show="hasImagePath" :disabled="!hasImagePath" @click="toggleSubSelect" class="btn btn-default toggle-sub-select-button" title="Sub Select">
 						<span class="glyphicon glyphicon-picture"></span>
 						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Sub-Select</span>
 					</button>
@@ -16,17 +16,17 @@
 						<span class="glyphicon glyphicon-modal-window"></span>
 						<span class="watermark-label visible-lg-inline-block visible-md-inline-block">Colors</span>
 					</button>
-					<div  class="toolbar-component">
+					<div class="toolbar-component">
 						<span>Base <span class="visible-lg-inline-block visible-md-inline-block">Width</span></span><input type="number" step="1" v-model="baseWidth" />
 					</div>
-					<div  class="toolbar-component">
+					<div class="toolbar-component">
 						<span>Sample <span class="visible-lg-inline-block visible-md-inline-block">Size</span></span><input type="number" step="1" v-model="sampleSize" />
 					</div>
-					<button :disabled="!hasImagePath" @click="handleGenerateMosaic" class="btn btn-default trixelate-button" title="Trixelate">
+					<button v-show="hasImagePath" :disabled="!hasImagePath" @click="handleGenerateMosaic" class="btn btn-default trixelate-button" title="Trixelate">
 						<span class="glyphicon glyphicon-play"></span>
 						<span class="visible-lg-inline-block visible-md-inline-block">Trixelate (Preview)</span>
 					</button>
-					<button :disabled="!hasImagePath" @click="handleSaveAsSvg" class="btn btn-default" title="Save SVG">
+					<button v-show="hasImagePath" :disabled="!hasImagePath" @click="handleSaveAsSvg" class="btn btn-default" title="Save SVG">
 						<span class="glyphicon glyphicon-save"></span>
 						<span class="visible-lg-inline-block visible-md-inline-block">Save SVG</span>
 					</button>
@@ -37,11 +37,14 @@
 			<div class="row image-preview" v-show="hasImagePath">
 				<div class="col-sm-12">
 					<img id="trixelator-target" :src="imagePath" />
+					<div v-show="isUsingSubSelect" class="subselector-overlay">
+						
+					</div>
 				</div>
 			</div>
 			<div class="row mosaic-output" v-show="hasImagePath">
 				<div class="col-sm-12">
-					<div class="trixelation-output" @click="handleTrixelClick">
+					<div class="trixelation-output" v-html="trixelationOutput" @click="handleTrixelClick">
 						<svg></svg>
 					</div>
 				</div>
@@ -71,6 +74,9 @@
 			imagePath: function() {
 				return store.state.imagePath;
 			},
+			isUsingSubSelect: function() {
+				return store.state.isUsingSubSelect;
+			},
 			sampleSize: {
 				get() {
 					return store.state.sampleSize;
@@ -78,6 +84,9 @@
 				set(value) {
 					this.$store.commit('setSampleSize', value);
 				}
+			},
+			trixelationOutput: function() {
+				return store.state.trixelationOutput;
 			}
 		},
 		props: [],
@@ -157,7 +166,7 @@
 				this.$store.commit('toggleColorManager');
 			},
 			handleGenerateMosaic: function(e) {
-				$(".trixelation-output").html(this.generateMosaic());
+				store.commit("setTrixelationOutput", this.generateMosaic());
 			},
 			handleSampleColors: function(e) {
 			

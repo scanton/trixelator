@@ -12,6 +12,14 @@ select {
 .clear {
 	clear: both;
 }
+input[type=range][orient=vertical] {
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+    margin-left: 2px;
+}
 .modal-view {
 	position: absolute;
 	top: 0;
@@ -52,7 +60,7 @@ select {
 	left: 0;
 	bottom: 0;
 	width: 300px;
-	background: #999;
+	background: #888;
 	transition: left .25s ease-out;
 	color: black;
 	overflow: scroll;
@@ -72,6 +80,17 @@ select {
 }
 .trixelator {
 	background: #333;
+}
+.image-preview {
+	position: relative;
+}
+.image-preview .subselector-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, .25);
 }
 .image-preview img {
 	border: 1px solid #444;
@@ -134,7 +153,8 @@ select {
 	border: 1px solid #666;
     margin-bottom: .25em;
     border-radius: 5px;
-    padding: .25em;
+	padding: .25em;
+	background: #999;
 }
 .modal-dialog-view .dialog-buttons {
 	display: inline-block;
@@ -154,4 +174,11 @@ select {
     padding: .5em;
     border: 1px solid #777;
     cursor: pointer;
+}
+.range-slider {
+	display: inline-block;
+	margin: .5em;
+}
+.minor-value {
+	font-size: 8pt;
 }
