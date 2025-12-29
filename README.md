@@ -2,6 +2,8 @@
 
 Modern rewrite of the triangle mosaic generator with a shared TypeScript core, a Next.js web UI, and an Electron desktop shell. The original Vue/Electron app is archived in `apps/legacy-vue-electron` for reference.
 
+<img width="2736" height="915" alt="image" src="https://github.com/user-attachments/assets/ff78c095-7907-4879-bd91-741dd39a5fd8" />
+
 ## Repository Layout
 - `apps/web` — Next.js + React (TS) web UI; also used by Electron.
 - `apps/desktop` — Electron shell + packaging via electron-builder.
