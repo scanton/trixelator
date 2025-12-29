@@ -1,0 +1,46 @@
+{
+  "name": "@trixelator/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "concurrently -k -n web,electron \"pnpm --dir ../web dev\" \"wait-on http://localhost:3001 && cross-env NODE_ENV=development electron .\"",
+    "build": "pnpm --dir ../web build && electron-builder --dir",
+    "dist": "pnpm --dir ../web build && electron-builder",
+    "lint": "echo \"lint not configured yet\"",
+    "typecheck": "echo \"typecheck not configured for Electron\""
+  },
+  "dependencies": {
+    "electron": "^28.2.0",
+    "electron-is-dev": "^3.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
+    "electron-builder": "^24.6.0",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.trixelator.desktop",
+    "productName": "Trixelator",
+    "files": ["src/**/*", "package.json"],
+    "extraResources": [
+      {
+        "from": "../web/out",
+        "to": "web"
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "target": ["nsis", "zip"]
+    },
+    "linux": {
+      "target": ["AppImage", "deb"]
+    }
+  }
+}

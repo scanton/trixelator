@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #0f172a;
+  --panel: #0b1020;
+  --card: #11182a;
+  --accent: #f59e0b;
+  --muted: #a3acc7;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(100% 100% at 20% 20%, rgba(245, 158, 11, 0.06), transparent 25%),
+    radial-gradient(80% 120% at 80% 0%, rgba(59, 130, 246, 0.05), transparent 45%),
+    var(--bg);
+  color: white;
+  font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand .badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  letter-spacing: 0.4px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: 0.6px;
+}
+
+p.lede {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.panel {
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)), var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.control label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.control input[type='number'],
+.control input[type='range'],
+.control select {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: white;
+  font-size: 14px;
+}
+
+.control input[type='range'] {
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: white;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 14px 30px rgba(249, 115, 22, 0.28);
+}
+
+button.secondary {
+  background: var(--card);
+  box-shadow: none;
+  border: 1px solid var(--border);
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px dashed var(--border);
+  box-shadow: none;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button.full {
+  width: 100%;
+}
+
+.upload {
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.canvas-wrap {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+}
+
+.canvas-wrap canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.palette-preview {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.palette-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+}
+
+.tag {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
