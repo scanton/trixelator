@@ -1,29 +1,16 @@
 {
-  "name": "trixelator",
-  "version": "1.0.0",
-  "description": "Tool to create triangle mosaic images",
-  "main": "main.js",
+  "name": "trixelator-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@8.15.4",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:web": "pnpm --dir apps/web dev",
+    "dev:desktop": "pnpm --dir apps/desktop dev",
+    "build:web": "pnpm --dir apps/web build",
+    "build:desktop": "pnpm --dir apps/desktop build",
+    "dist": "pnpm --dir apps/desktop dist",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/scanton/trixelator.git"
-  },
-  "keywords": [
-    "triangle",
-    "pixel",
-    "mosaic"
-  ],
-  "author": "Satori Canton",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/scanton/trixelator/issues"
-  },
-  "homepage": "https://github.com/scanton/trixelator#readme",
-  "dependencies": {
-    "electron-prebuilt": "^1.4.13",
-    "fs-extra": "^5.0.0"
-  }
+  "devDependencies": {}
 }

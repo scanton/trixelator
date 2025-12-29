@@ -1,1 +1,31 @@
 node_modules/
+.pnpm-store/
+pnpm-lock.yaml
+npm-debug.log*
+yarn-error.log*
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# Next.js
+.next/
+out/
+.turbo/
+
+# Electron / builder output
+dist/
+release/
+*.dmg
+*.exe
+*.app
+*.asar
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Package workspaces
+apps/*/node_modules/
+apps/desktop/dist/
+apps/web/out/
